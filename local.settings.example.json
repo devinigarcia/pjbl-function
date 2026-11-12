@@ -1,0 +1,14 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "PRODUTOS_API_URL": "http://localhost:3001",
+    "PRODUTOS_API_KEY": "chave-interna-de-desenvolvimento",
+    "ORDER_EVENTS_QUEUE": "order-events"
+  },
+  "Host": {
+    "LocalHttpPort": 7071,
+    "CORS": "*"
+  }
+}

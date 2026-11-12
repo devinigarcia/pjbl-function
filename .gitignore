@@ -1,0 +1,27 @@
+# dependências e build
+node_modules/
+dist/
+coverage/
+
+# configuração local do Functions (tem connection string e chaves) — use o local.settings.example.json
+local.settings.json
+.env
+.env.*
+
+# arquivos que o Azurite cria quando roda dentro da pasta do projeto
+__azurite_db*__.json
+__blobstorage__/
+__queuestorage__/
+azurite-data/
+
+# ferramentas / sistema
+.vscode/
+.idea/
+*.log
+.DS_Store
+Thumbs.db
+*.tsbuildinfo
+
+# pacotes de publicação
+*.zip
+.python_packages/
