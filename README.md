@@ -287,11 +287,11 @@ do BFF é `{{URL_FUNCTION}}/api`.
 
 Outros repositórios do projeto:
 
-- Microfrontend: https://github.com/{{GITHUB_USER}}/pjbl-microfrontend
-- BFF: https://github.com/{{GITHUB_USER}}/pjbl-bff
-- ms-produtos: https://github.com/{{GITHUB_USER}}/pjbl-ms-produtos
-- ms-pedidos: https://github.com/{{GITHUB_USER}}/pjbl-ms-pedidos
-- Arquitetura (ARC42, C4, contratos): https://github.com/{{GITHUB_USER}}/pjbl-arquitetura
+- Microfrontend: https://github.com/devinigarcia/pjbl-microfrontend
+- BFF: https://github.com/devinigarcia/pjbl-bff
+- ms-produtos: https://github.com/devinigarcia/pjbl-ms-produtos
+- ms-pedidos: https://github.com/devinigarcia/pjbl-ms-pedidos
+- Arquitetura (ARC42, C4, contratos): https://github.com/devinigarcia/pjbl-arquitetura
 
 ## Alunos
 
