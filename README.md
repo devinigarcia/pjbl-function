@@ -277,13 +277,13 @@ O `.funcignore` deixa de fora `src/`, `tests/` e os arquivos de configuração; 
 `package.json` e `node_modules`.
 
 Depois do deploy, a chave que o BFF precisa (`FUNCTION_KEY`) está no portal em *App keys*, e a `FUNCTION_URL`
-do BFF é `{{URL_FUNCTION}}/api`.
+do BFF é `https://func-pjbl-0a42b2.azurewebsites.net/api`.
 
 ## Links na nuvem
 
-- Swagger da Function: {{URL_FUNCTION}}/api/docs
-- Health: {{URL_FUNCTION}}/api/health
-- OpenAPI (JSON): {{URL_FUNCTION}}/api/openapi.json
+- Swagger da Function: https://func-pjbl-0a42b2.azurewebsites.net/api/docs
+- Health: https://func-pjbl-0a42b2.azurewebsites.net/api/health
+- OpenAPI (JSON): https://func-pjbl-0a42b2.azurewebsites.net/api/openapi.json
 
 Outros repositórios do projeto:
 
