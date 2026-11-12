@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Typecheck, testes e build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Testes (unitários, integração e arquitetura)
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+  deploy:
+    name: Deploy na Function App
+    needs: test
+    # Só publica o que entrou na main (PR e execução manual em outra branch param no job de teste).
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      # Secrets não podem ser usados no "if" do job, então a checagem é feita num passo.
+      - name: Conferir se o deploy está configurado
+        id: config
+        env:
+          APP_NAME: ${{ vars.AZURE_FUNCTIONAPP_NAME }}
+          PUBLISH_PROFILE: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+        run: |
+          if [ -z "$APP_NAME" ] || [ -z "$PUBLISH_PROFILE" ]; then
+            echo "::warning title=Deploy pulado::Defina a variável AZURE_FUNCTIONAPP_NAME e o secret AZURE_FUNCTIONAPP_PUBLISH_PROFILE no repositório para publicar a Function."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.config.outputs.enabled == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.config.outputs.enabled == 'true'
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Build e dependências de produção
+        if: steps.config.outputs.enabled == 'true'
+        run: |
+          npm ci
+          npm run build
+          npm prune --omit=dev
+
+      - name: Publicar na Azure Function App
+        if: steps.config.outputs.enabled == 'true'
+        uses: Azure/functions-action@v1
+        with:
+          app-name: ${{ vars.AZURE_FUNCTIONAPP_NAME }}
+          package: .
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+          # Obrigatório quando se usa publish profile num app do plano Flex Consumption.
+          sku: flexconsumption
+          respect-funcignore: true
